@@ -3,7 +3,7 @@ info:
   title: "PrimeAPI.io"
   version: "1.0.0"
   description: "Currencies, FX & Crypto exchange rate data API"
-  termsOfService: "https://www.primeapi.io/terms-of-sale"
+  termsOfService: "https://www.primeapi.io/prime-api-terms-and-conditions"
   contact:
     email: "support@primeapi.io"
   license:
@@ -1384,7 +1384,7 @@ paths:
     get:
       tags:
         - "fx"
-      description: "bid/ask time-series data for a given FX trading pair and interval"
+      description: "bid/ask time-series data for a given FX trading pair and interval. Values are the closing bid/ask for the interval."
       parameters:
         - name: "pair"
           in: "query"
@@ -1502,7 +1502,7 @@ paths:
     get:
       tags:
         - "fx"
-      description: "Fetch a set of OHLC time-series data points for a given FX trading pair and interval"
+      description: "Fetch a set of OHLC time-series data points for a given FX trading pair and interval. Values are based on the BID price."
       parameters:
         - name: "pair"
           in: "query"
