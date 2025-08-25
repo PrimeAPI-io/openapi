@@ -1,7 +1,7 @@
 openapi: "3.0.3"
 info:
   title: "PrimeAPI.io"
-  version: "1.0.0"
+  version: "1.0.1"
   description: "Currencies, FX & Crypto exchange rate data API"
   termsOfService: "https://www.primeapi.io/prime-api-terms-and-conditions"
   contact:
@@ -1049,7 +1049,7 @@ paths:
       parameters:
         - name: "interval"
           in: "query"
-          description: "ISO8601 duration, such as P1D (daily). Defaults to P1D."
+          description: "ISO8601 duration, such as P1D (daily). Defaults to P1D. Options are P1D, PT1H, PT1M."
           required: false
           schema:
             $ref: "#/components/schemas/Duration"
@@ -1406,7 +1406,7 @@ paths:
             $ref: "#/components/schemas/DateOrDateTime"
         - name: "interval"
           in: "query"
-          description: "ISO8601 duration, such as P1D (daily). Defaults to P1D."
+          description: "ISO8601 duration, such as P1D (daily). Defaults to P1D. Options are P1D, PT1H, PT1M."
           required: false
           schema:
             $ref: "#/components/schemas/Duration"
@@ -1524,7 +1524,7 @@ paths:
             $ref: "#/components/schemas/DateOrDateTime"
         - name: "interval"
           in: "query"
-          description: "ISO8601 duration, such as P1D (daily). Defaults to P1D."
+          description: "ISO8601 duration, such as P1D (daily). Defaults to P1D. Options are P1D, PT1H, PT1M."
           required: false
           schema:
             $ref: "#/components/schemas/Duration"
