@@ -1395,7 +1395,7 @@ paths:
         - name: "start"
           in: "query"
           description: "Time-series start. Supported formats: YYYY-MM-DD (UTC). YYYY-MM-DD HH:MM:SS (UTC), ISO8601 with timezone offset. Timestamp in milliseconds. Supply this or end."
-          required: true
+          required: false
           schema:
             $ref: "#/components/schemas/DateOrDateTime"
         - name: "end"
@@ -1519,7 +1519,7 @@ paths:
         - name: "start"
           in: "query"
           description: "Time-series start. Supported formats: YYYY-MM-DD (UTC). YYYY-MM-DD HH:MM:SS (UTC), ISO8601 with timezone offset. Timestamp in milliseconds. Supply this or end."
-          required: true
+          required: false
           schema:
             $ref: "#/components/schemas/DateOrDateTime"
         - name: "end"
