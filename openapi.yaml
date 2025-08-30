@@ -1440,10 +1440,15 @@ paths:
                   limit:
                     type: number
                     format: int32
+                  dtmfmt:
+                    $ref: "#/components/schemas/DateTimeFormat"
                   start:
                     $ref: "#/components/schemas/DateTimes"
                   end:
                     $ref: "#/components/schemas/DateTimes"
+                  tzOffset:
+                    type: string
+                    description: "Timezone offset. e.g. +00:00 or -05:00"
                   size:
                     $ref: "#/components/schemas/QuoteSize"
                   results:
@@ -1465,7 +1470,9 @@ paths:
                 pair: GBPUSD
                 interval: PT1M
                 limit: 10
+                dtmfmt: UTCYMD
                 end: '2025-02-13 16:30:00'
+                tzOffset: '+00:00'
                 size: 1
                 results:
                   - dtm: '2025-02-13 16:29:00'
@@ -1564,10 +1571,15 @@ paths:
                   limit:
                     type: number
                     format: int32
+                  dtmfmt:
+                    $ref: "#/components/schemas/DateTimeFormat"
                   start:
                     $ref: "#/components/schemas/DateTimes"
                   end:
                     $ref: "#/components/schemas/DateTimes"
+                  tzOffset:
+                    type: string
+                    description: "Timezone offset. e.g. +00:00 or -05:00"
                   size:
                     $ref: "#/components/schemas/QuoteSize"
                   results:
@@ -1595,7 +1607,9 @@ paths:
                 pair: EURUSD
                 interval: P1D
                 limit: 3
+                dtmfmt: UTCYMD
                 end: '2021-01-26 00:00:00'
+                tzOffset: '+00:00'
                 size: 1
                 results:
                   - dtm: '2021-01-24 00:00:00'
