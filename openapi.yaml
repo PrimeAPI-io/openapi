@@ -1,7 +1,7 @@
 openapi: "3.0.3"
 info:
   title: "PrimeAPI.io"
-  version: "1.0.1"
+  version: "1.1.0"
   description: "Currencies, FX & Crypto exchange rate data API"
   termsOfService: "https://www.primeapi.io/prime-api-terms-and-conditions"
   contact:
@@ -1384,7 +1384,7 @@ paths:
     get:
       tags:
         - "fx"
-      description: "bid/ask time-series data for a given FX trading pair and interval. Values are the closing bid/ask for the interval."
+      description: "bid/ask time-series data for a given FX trading pair and interval. Values are the closing bid/ask for the interval. Supports a range of datetime formats and timezone offsets. Datetime format in the response will try to match your request - unless specified explicitly."
       parameters:
         - name: "pair"
           in: "query"
@@ -1394,16 +1394,22 @@ paths:
             $ref: "#/components/schemas/TradingPair"
         - name: "start"
           in: "query"
-          description: "UTC start in YYYY-MM-DD format. Or YYYY-MM-DD HH:MM:SS. Supply this or end."
+          description: "Time-series start. Supported formats: YYYY-MM-DD (UTC). YYYY-MM-DD HH:MM:SS (UTC), ISO8601 with timezone offset. Timestamp in milliseconds. Supply this or end."
           required: true
           schema:
             $ref: "#/components/schemas/DateOrDateTime"
         - name: "end"
           in: "query"
-          description: "UTC end in YYYY-MM-DD format. Or YYYY-MM-DD HH:MM:SS. Supply this or start."
+          description: "Time-series end. Supported formats: YYYY-MM-DD (UTC). YYYY-MM-DD HH:MM:SS (UTC), ISO8601 with timezone offset. Timestamp in milliseconds. Supply this or start."
           required: false
           schema:
             $ref: "#/components/schemas/DateOrDateTime"
+        - name: dtmfmt
+          in: "query"
+          description: "Desired datetime response format. Defaults to match your request. Can be [ISO] ISO8601 datetime including timezone offset, [TSP] UNIX Timestamp in milliseconds, or [UTCYMD] 'YYYY-MM-DD HH:MM:SS' (UTC)."
+          required: false
+          schema:
+            $ref: "#/components/schemas/DateTimeFormat"
         - name: "interval"
           in: "query"
           description: "ISO8601 duration, such as P1D (daily). Defaults to P1D. Options are P1D, PT1H, PT1M."
@@ -1435,9 +1441,9 @@ paths:
                     type: number
                     format: int32
                   start:
-                    $ref: "#/components/schemas/DateTime"
+                    $ref: "#/components/schemas/DateTimes"
                   end:
-                    $ref: "#/components/schemas/DateTime"
+                    $ref: "#/components/schemas/DateTimes"
                   size:
                     $ref: "#/components/schemas/QuoteSize"
                   results:
@@ -1446,7 +1452,7 @@ paths:
                       type: object
                       properties:
                         dtm:
-                          $ref: "#/components/schemas/DateTime"
+                          $ref: "#/components/schemas/DateTimes"
                         bid:
                           type: number
                           format: float
@@ -1502,7 +1508,7 @@ paths:
     get:
       tags:
         - "fx"
-      description: "Fetch a set of OHLC time-series data points for a given FX trading pair and interval. Values are based on the BID price."
+      description: "Fetch a set of OHLC time-series data points for a given FX trading pair and interval. Values are based on the BID price. Supports a range of datetime formats and timezone offsets. Datetime format in the response will try to match your request - unless specified explicitly."
       parameters:
         - name: "pair"
           in: "query"
@@ -1512,16 +1518,22 @@ paths:
             $ref: "#/components/schemas/TradingPair"
         - name: "start"
           in: "query"
-          description: "UTC start in YYYY-MM-DD format. Or YYYY-MM-DD HH:MM:SS. Supply this or end."
+          description: "Time-series start. Supported formats: YYYY-MM-DD (UTC). YYYY-MM-DD HH:MM:SS (UTC), ISO8601 with timezone offset. Timestamp in milliseconds. Supply this or end."
           required: true
           schema:
             $ref: "#/components/schemas/DateOrDateTime"
         - name: "end"
           in: "query"
-          description: "UTC end in YYYY-MM-DD format. Or YYYY-MM-DD HH:MM:SS. Supply this or start."
+          description: "Time-series end. Supported formats: YYYY-MM-DD (UTC). YYYY-MM-DD HH:MM:SS (UTC), ISO8601 with timezone offset. Timestamp in milliseconds. Supply this or start."
           required: false
           schema:
             $ref: "#/components/schemas/DateOrDateTime"
+        - name: dtmfmt
+          in: "query"
+          description: "Desired datetime response format. Defaults to match your request. Can be [ISO] ISO8601 datetime including timezone offset, [TSP] UNIX Timestamp in milliseconds, or [UTCYMD] 'YYYY-MM-DD HH:MM:SS' (UTC)."
+          required: false
+          schema:
+            $ref: "#/components/schemas/DateTimeFormat"
         - name: "interval"
           in: "query"
           description: "ISO8601 duration, such as P1D (daily). Defaults to P1D. Options are P1D, PT1H, PT1M."
@@ -1553,9 +1565,9 @@ paths:
                     type: number
                     format: int32
                   start:
-                    $ref: "#/components/schemas/DateTime"
+                    $ref: "#/components/schemas/DateTimes"
                   end:
-                    $ref: "#/components/schemas/DateTime"
+                    $ref: "#/components/schemas/DateTimes"
                   size:
                     $ref: "#/components/schemas/QuoteSize"
                   results:
@@ -1564,7 +1576,7 @@ paths:
                       type: object
                       properties:
                         dtm:
-                          $ref: "#/components/schemas/DateTime"
+                          $ref: "#/components/schemas/DateTimes"
                         o:
                           type: number
                           format: float
@@ -1750,6 +1762,10 @@ components:
       type: number
       format: int64
       description: "Milliseconds since Jan 1 1970 (unix timestamp with millisecond precision)"
+    IsoDateTimeZone:
+      type: string
+      pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(Z?|[+-]\d{2}:00)"
+      description: "ISO8601 Datetime with optional timezone offset YYYY-MM-DDTHH:MM:SS±HH:00"
     DateTime:
       type: string
       pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}"
@@ -1759,9 +1775,22 @@ components:
       pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}"
       description: "UTC/GMT date YYYY-MM-DD"
     DateOrDateTime:
+      description: "A datetime value. If no timezone offset supplied, UTC/GMT is assumed. If only a date is supplied, time is assumed to be 00:00:00 UTC."
       oneOf:
         - $ref: "#/components/schemas/Date"
         - $ref: "#/components/schemas/DateTime"
+        - $ref: "#/components/schemas/IsoDateTimeZone"
+        - $ref: "#/components/schemas/TimestampMillis"
+    DateTimes:
+      description: "A datetime value. If no timezone offset supplied, UTC/GMT is assumed."
+      oneOf:
+        - $ref: "#/components/schemas/DateTime"
+        - $ref: "#/components/schemas/IsoDateTimeZone"
+        - $ref: "#/components/schemas/TimestampMillis"
+    DateTimeFormat:
+      description: "Can be [ISO] ISO8601 datetime including timezone offset, [TSP] UNIX Timestamp in milliseconds, or [UTCYMD] 'YYYY-MM-DD HH:MM:SS' (UTC)."
+      type: string
+      enum: [ISO, TSP, UTCYMD]
     Duration:
       type: string
       description: "ISO8601 Duration. https://en.wikipedia.org/wiki/ISO_8601#Durations"
