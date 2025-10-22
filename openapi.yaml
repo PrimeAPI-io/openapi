@@ -1,7 +1,7 @@
 openapi: "3.0.3"
 info:
   title: "PrimeAPI.io"
-  version: "1.2.0"
+  version: "1.3.0"
   description: "Currencies, FX & Crypto exchange rate data API"
   termsOfService: "https://www.primeapi.io/prime-api-terms-and-conditions"
   contact:
@@ -53,7 +53,7 @@ paths:
                   base:
                     $ref: "#/components/schemas/AnyCurrency"
                   updated:
-                    $ref: "#/components/schemas/DateTime"
+                    $ref: "#/components/schemas/DateTimes"
                   ms:
                     $ref: "#/components/schemas/ResponseTime"
                   result:
@@ -67,7 +67,7 @@ paths:
                 base: USD
                 result:
                   EUR: 0.82791
-                updated: '2021-01-16 16:34:29'
+                updated: '2021-01-16T16:34:29Z'
                 ms: 4
         "400":
           description: "Bad Request"
@@ -107,7 +107,7 @@ paths:
                   base:
                     $ref: "#/components/schemas/Currency"
                   updated:
-                    $ref: "#/components/schemas/DateTime"
+                    $ref: "#/components/schemas/DateTimes"
                   ms:
                     $ref: "#/components/schemas/ResponseTime"
                   results:
@@ -121,7 +121,7 @@ paths:
                 results:
                   EUR: 0.82791
                   GBP: 0.73605
-                updated: '2021-01-16 16:34:29'
+                updated: '2021-01-16T16:34:29Z'
                 ms: 8
         "400":
           description: "Bad Request"
@@ -155,7 +155,7 @@ paths:
                   base:
                     $ref: "#/components/schemas/Currency"
                   updated:
-                    $ref: "#/components/schemas/DateTime"
+                    $ref: "#/components/schemas/DateTimes"
                   ms:
                     $ref: "#/components/schemas/ResponseTime"
                   results:
@@ -326,7 +326,7 @@ paths:
                   YER: 245.27
                   ZAR: 19.1345
                   ZMW: 28.3
-                updated: '2025-04-11 23:59:53'
+                updated: '2025-04-11T23:59:53Z'
                 ms: 77
         "400":
           description: "Bad Request"
@@ -340,7 +340,7 @@ paths:
     get:
       tags:
         - "currency"
-      description: "Fetch a set of many source currency rates to a single target currency (inverse of /fetch-multi). Midpoint spot rates."
+      description: "Fetch a set of many source currency rates to a single target currency (inverse of /fetch-multi). Midpoint spot rates. Costs one API call per pair returned."
       parameters:
         - name: "from"
           in: "query"
@@ -365,7 +365,7 @@ paths:
                   to:
                     $ref: "#/components/schemas/Currency"
                   updated:
-                    $ref: "#/components/schemas/DateTime"
+                    $ref: "#/components/schemas/DateTimes"
                   calls:
                     $ref: "#/components/schemas/ApiUsage"
                   ms:
@@ -384,7 +384,7 @@ paths:
                   ZAR: 0.0578,
                   AUD: 0.65962,
                   AED: 0.27229,
-                updated: '2025-10-03 16:34:29'
+                updated: '2025-10-03T16:34:29Z'
                 calls: 5
                 ms: 12
         "400":
@@ -399,7 +399,7 @@ paths:
     get:
       tags:
         - "currency"
-      description: "Fetch a matrix of multiple from/to currency pairs. Midpoint spot rates."
+      description: "Fetch a matrix of multiple from/to currency pairs. Midpoint spot rates. Costs one API call per pair returned."
       parameters:
         - name: "from"
           in: "query"
@@ -439,7 +439,7 @@ paths:
                         type: number
                         format: float
                   updated:
-                    $ref: "#/components/schemas/DateTime"
+                    $ref: "#/components/schemas/DateTimes"
                   calls:
                     $ref: "#/components/schemas/ApiUsage"
                   ms:
@@ -476,7 +476,7 @@ paths:
                     GBP: 0.20196
                     JPY: 40.1552
                     CNY: 1.938
-                updated: '2025-10-03 16:52:05'
+                updated: '2025-10-03T16:52:05Z'
                 calls: 16
                 ms: 8
         "400":
@@ -1228,14 +1228,14 @@ paths:
                     type: object
                     minProperties: 2000
                     additionalProperties:
-                      $ref: "#/components/schemas/DateTime"
+                      $ref: "#/components/schemas/DateTimes"
               example:
                 interval: P1D
                 price: bid
                 pairs:
-                  EURUSD: 1976-01-02 00:00:00
-                  GBPUSD: 1970-01-02 00:00:00
-                  USDJPY: 1975-01-02 00:00:00
+                  EURUSD: 1976-01-02T00:00:00Z
+                  GBPUSD: 1970-01-02T00:00:00Z
+                  USDJPY: 1975-01-02T00:00:00Z
                 ms: 12
         "400":
           description: "Bad Request"
@@ -1268,7 +1268,7 @@ paths:
                   IRRUSD: 100000,
                   VNDUSD: 10000,
                   LKRNZD: 1000,
-                  JPYCZX: 100,
+                  DOPGBP: 100,
                 ms: 12
         "400":
           description: "Bad Request"
@@ -1621,36 +1621,36 @@ paths:
                 pair: GBPUSD
                 interval: PT1M
                 limit: 10
-                dtmfmt: UTCYMD
-                end: '2025-02-13 16:30:00'
+                dtmfmt: ISO
+                end: '2025-02-13T16:30:00Z'
                 tzOffset: '+00:00'
                 size: 1
                 results:
-                  - dtm: '2025-02-13 16:29:00'
+                  - dtm: '2025-02-13T16:29:00Z'
                     bid: 1.25377
                     ask: 1.25379
-                  - dtm: '2025-02-13 16:28:00'
+                  - dtm: '2025-02-13T16:28:00Z'
                     bid: 1.2536
                     ask: 1.25371
-                  - dtm: '2025-02-13 16:27:00'
+                  - dtm: '2025-02-13T16:27:00Z'
                     bid: 1.25359
                     ask: 1.25366
-                  - dtm: '2025-02-13 16:26:00'
+                  - dtm: '2025-02-13T16:26:00Z'
                     bid: 1.25385
                     ask: 1.25396
-                  - dtm: '2025-02-13 16:25:00'
+                  - dtm: '2025-02-13T16:25:00Z'
                     bid: 1.25401
                     ask: 1.25402
-                  - dtm: '2025-02-13 16:24:00'
+                  - dtm: '2025-02-13T16:24:00Z'
                     bid: 1.25392
                     ask: 1.25397
-                  - dtm: '2025-02-13 16:23:00'
+                  - dtm: '2025-02-13T16:23:00Z'
                     bid: 1.25374
                     ask: 1.25379
-                  - dtm: '2025-02-13 16:22:00'
+                  - dtm: '2025-02-13T16:22:00Z'
                     bid: 1.2537
                     ask: 1.25387
-                  - dtm: '2025-02-13 16:21:00'
+                  - dtm: '2025-02-13T16:21:00Z'
                     bid: 1.25372
                     ask: 1.25389
                 ms: 16
@@ -1758,22 +1758,22 @@ paths:
                 pair: EURUSD
                 interval: P1D
                 limit: 3
-                dtmfmt: UTCYMD
-                end: '2021-01-26 00:00:00'
+                dtmfmt: ISO
+                end: '2021-01-26T00:00:00Z'
                 tzOffset: '+00:00'
                 size: 1
                 results:
-                  - dtm: '2021-01-24 00:00:00'
+                  - dtm: '2021-01-24T00:00:00Z'
                     o: 1.2145
                     h: 1.2156
                     l: 1.2134
                     c: 1.2142
-                  - dtm: '2021-01-25 00:00:00'
+                  - dtm: '2021-01-25T00:00:00Z'
                     o: 1.2142
                     h: 1.2157
                     l: 1.2139
                     c: 1.2149
-                  - dtm: '2021-01-26 00:00:00'
+                  - dtm: '2021-01-26T00:00:00Z'
                     o: 1.2149
                     h: 1.2158
                     l: 1.2137
